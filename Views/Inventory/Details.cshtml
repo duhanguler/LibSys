@@ -1,0 +1,18 @@
+﻿@model LibSys.Models.Inventory
+
+<div class="container">
+    <h1 class="mt-4 mb-3">Inventory Details</h1>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title">ID: @Model.Id</h4>
+            <h4 class="card-title">Resource: @Model.Resource.Title</h4>
+            <h4 class="card-title">Quantity: @Model.Quantity</h4>
+            <!-- Diğer özellikler -->
+        </div>
+    </div>
+
+    <p class="mt-4">
+        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary" })
+    </p>
+</div>

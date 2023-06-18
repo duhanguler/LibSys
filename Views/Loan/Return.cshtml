@@ -1,0 +1,19 @@
+﻿@model LibSys.Models.Loan
+
+<h1>Return Resource</h1>
+
+<form asp-controller="Loan" asp-action="Return" method="post">
+    <h4>Title: @Model.Resource.Title</h4>
+    <input type="hidden" asp-for="LoanId" />
+
+    <div class="form-group">
+        <label>Return Date:</label>
+        <input type="date" name="ReturnDate" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Return</button>
+</form>
+
+<p>
+    <a asp-action="Index">Back to List</a>
+</p>

@@ -1,0 +1,142 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LibSys</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LibSys.styles.css" asp-append-version="true" />
+    <meta name="theme-color" content="#7952b3">
+    <style>
+      
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="l-navbar" id="nav-bar">
+            <nav class="nav">
+                <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+                    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                        <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                        <span class="fs-5 fw-semibold">LibSys</span>
+                    </a>
+                    <ul class="list-unstyled ps-0">
+                        <li class="mb-1">
+                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                                Home
+                            </button>
+                            <div class="collapse" id="home-collapse" style="">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li><a asp-controller="Home" asp-action="Index" class="link-dark rounded">Index</a></li>
+                                    <li><a asp-controller="Account" asp-action="Index" class="link-dark rounded">My Borrowings</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1">
+                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#resource-collapse" aria-expanded="false">
+                                Resources
+                            </button>
+                            <div class="collapse" id="resource-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li><a asp-controller="Resource" asp-action="Index" class="link-dark rounded">Overview</a></li>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Librarian"))
+                                    {
+                                        <li><a asp-controller="Resource" asp-action="Create" class="link-dark rounded">Create</a></li>
+                                        <li><a asp-controller="Resource" asp-action="Edit" class="link-dark rounded">Edit</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Librarian"))
+                        {
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#inventory-collapse" aria-expanded="false">
+                                    Inventory
+                                </button>
+                                <div class="collapse" id="inventory-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a asp-controller="Inventory" asp-action="Index" class="link-dark rounded">Overview</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
+                                    User
+                                </button>
+                                <div class="collapse" id="user-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a asp-controller="User" asp-action="Index" class="link-dark rounded">Overview</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#statistics-collapse" aria-expanded="false">
+                                    Statistics
+                                </button>
+                                <div class="collapse" id="statistics-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a asp-controller="Statistics" asp-action="Index" class="link-dark rounded">Overview</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        <li class="border-top my-3"></li>
+                        <li class="mb-1">
+                            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                                Account
+                            </button>
+                            <div class="collapse" id="account-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <partial name="_LoginPartial" />
+                                    </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--Container Main start-->
+    <div class="container icerik">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    <!--Container Main end-->
+
+    <footer class="border-top footer bg-dark text-light fixed-bottom">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2023 - LibSys - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light">Privacy</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        /* global bootstrap: false */
+        (function () {
+            'use strict'
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        })()</script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

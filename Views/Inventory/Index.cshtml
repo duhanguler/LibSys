@@ -1,0 +1,33 @@
+﻿@model IEnumerable<LibSys.Models.Inventory>
+
+<div class="container">
+    <h1 class="mt-4 mb-3">Inventory List</h1>
+
+    <p>
+        @Html.ActionLink("Create New", "Create", new { @class = "btn btn-primary" })
+    </p>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Resource</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Resource.Title</td>
+                    <td>@item.Quantity</td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

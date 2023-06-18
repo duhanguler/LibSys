@@ -1,0 +1,72 @@
+﻿@model LibSys.Models.ViewModels.UserProfileViewModel
+
+<div class="container">
+    <h1 class="my-4">User Details</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title">Username: @Model.UserName</h4>
+            <h4 class="card-subtitle mb-2 text-muted">Email: @Model.Email</h4>
+            <h4 class="card-subtitle mb-2 text-muted">First Name: @Model.FirstName</h4>
+            <h4 class="card-subtitle mb-2 text-muted">Last Name: @Model.LastName</h4>
+            <h4 class="card-subtitle mb-2 text-muted">TC Identity Number: @Model.TCIdentityNumber</h4>
+            <a asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mt-3">Edit</a>
+        </div>
+    </div>
+
+    <h2 class="my-4">Borrowed Resources</h2>
+
+    @if (Model.Loans != null && Model.Loans.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Publisher</th>
+                    <th>Borrowed Date</th>
+                    <th>Return</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var loan in Model.Loans)
+                {
+                    <tr>
+                        <td>@loan.Resource.Title</td>
+                        <td>@loan.Resource.Author</td>
+                        <td>@loan.Resource.Publisher</td>
+                        <td>@loan.BorrowDate.ToShortDateString()</td>
+                        <td>
+                            <form asp-controller="Loan" asp-action="Return" method="post">
+                                <input type="hidden" name="loanId" value="@loan.LoanId" />
+                                <button type="submit" class="btn btn-primary">Return</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">No borrowed resources found.</div>
+    }
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Librarian"))
+    {
+        <h2 class="my-4">Quick Return</h2>
+        <form asp-controller="Loan" asp-action="QuickReturn" method="post">
+            <input type="hidden" name="UserId" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger">Return All Resources</button>
+        </form>
+    }
+
+    <p class="mt-4">
+        <a asp-controller="User" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </p>
+</div>

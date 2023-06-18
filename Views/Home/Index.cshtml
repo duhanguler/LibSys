@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var userName = User.Identity.IsAuthenticated ? User.Identity.Name : "Misafir";
+}
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Welcome to Our Library</h1>
+            <h1>@(userName == "Misafir" ? "Welcome Guest!" : $"Welcome {userName}")</h1>
+            <p class="lead">We offer a variety of services for all your reading needs.</p>
+            <h5>Project for CENG423</h5>
+            <p>This library program is designed as a project for the CENG423 - Software Engineering course. It exemplifies the application of various software engineering principles, such as object-oriented programming, use of design patterns, and following Agile methodologies in the software development process.</p>
+        </div>
+    </div>
+
+    <div class="row my-4">
+        <!-- Existing Features -->
+        <!-- ... -->
+        <!-- How Our Program Works -->
+        <div class="col-12">
+            <h3 class="my-4">How Our Program Works</h3>
+
+            <h5>Resource</h5>
+            <p>The Resource component manages our collection of books. Each resource represents a type of book in our library, including information such as title, author, publisher, and ISBN.</p>
+
+            <h5>Loan</h5>
+            <p>The Loan component handles the borrowing of resources. When a user borrows a resource, a new loan is created with details about the user, the borrowed resource, and the due date for return.</p>
+
+            <h5>Inventory</h5>
+            <p>The Inventory component keeps track of the physical copies of resources in our library. For each resource, the inventory will show the total copies and the number of available copies for borrowing.</p>
+
+            <h5>UserController</h5>
+            <p>The UserController handles user management. It includes features for registering new users, updating user profiles, and managing user loans.</p>
+
+            <h5>AccountController</h5>
+            <p>The AccountController is responsible for handling user authentication. It provides features for logging in, logging out, and password recovery.</p>
+
+            <h5>Statistics Feature</h5>
+            <p>We also provide a comprehensive statistics feature that allows us to keep track of various metrics, such as the most borrowed books, frequent borrowers, and so on. This feature helps us serve our readers better by understanding their preferences.</p>
+
+            <h5>.NET 6 and Clean Code Structure</h5>
+            <p>Our library program is built on the .NET 6 framework, taking advantage of its high performance, scalability, and modern language features. We follow clean coding practices to make our code easy to read, maintain, and extend. This also includes utilizing SOLID principles, proper error handling, and effective logging mechanisms.</p>
+        
+            <div class="col-12">
+                <h3 class="my-4">Demo Users</h3>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Admin Demo</h5>
+                                <p class="card-text">
+                                    Username: test.admin@gmail.com<br />
+                                    Password: 123qwertY!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">User Demo</h5>
+                                <p class="card-text">
+                                    Username: test.user@gmail.com<br />
+                                    Password: 123qwertY!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

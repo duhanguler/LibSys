@@ -1,0 +1,59 @@
+﻿@model List<LibSys.Models.ViewModels.UserProfileViewModel>
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@foreach (var userProfile in Model)
+{
+    <h4 class="mb-2">Hello @userProfile.UserName</h4>
+    <h4 class="mb-2">Email: @userProfile.Email</h4>
+
+    @if (userProfile.Loans != null && userProfile.Loans.Count > 0)
+    {
+        <h4 class="mb-2">Loaned Resources:</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Borrow Date</th>
+                    <th>Return Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var loan in userProfile.Loans)
+                {
+                    <tr>
+                        <td>@loan.Resource.Title</td>
+                        <td>@loan.Resource.Author</td>
+                        <td>@loan.BorrowDate.ToShortDateString()</td>
+                        <td>@loan.ReturnDate.ToShortDateString()</td>
+                        <td>
+                            <form asp-controller="Loan" asp-action="Return" method="post" class="d-inline">
+                                <input type="hidden" name="loanId" value="@loan.LoanId" />
+                                <button type="submit" class="btn btn-primary">Return</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="mb-2">No loans found.</p>
+    }
+}
+
+<p>
+    @Html.ActionLink("Back to Home", "Index", "Home", new { @class = "btn btn-secondary" })
+</p>

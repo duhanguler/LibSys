@@ -1,0 +1,45 @@
+﻿@model LibSys.Models.ViewModels.EditUserViewModel
+
+<h1>Edit User</h1>
+
+<form asp-controller="User" asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="UserName">Username</label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FirstName">First Name</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">Last Name</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TCIdentityNumber">TC Identity Number</label>
+        <input asp-for="TCIdentityNumber" class="form-control" />
+        <span asp-validation-for="TCIdentityNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="UserRoles">Roles</label>
+        @foreach (var role in Model.AllRoles)
+        {
+            <div>
+                <input type="checkbox" id="@role" name="UserRoles" value="@role" @(Model.UserRoles.Contains(role) ? "checked" : "") />
+                <label for="@role">@role</label>
+            </div>
+        }
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

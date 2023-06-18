@@ -1,0 +1,28 @@
+﻿@model LibSys.Models.ApplicationUser
+
+<h1>Delete User</h1>
+
+<p>Are you sure you want to delete this user?</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <dl class="dl-horizontal">
+            <dt>Username</dt>
+            <dd>@Model.UserName</dd>
+            <dt>Email</dt>
+            <dd>@Model.Email</dd>
+            <dt>First Name</dt>
+            <dd>@Model.FirstName</dd>
+            <dt>Last Name</dt>
+            <dd>@Model.LastName</dd>
+            <dt>TC Identity Number</dt>
+            <dd>@Model.TCIdentityNumber</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-controller="User" asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-controller="User" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

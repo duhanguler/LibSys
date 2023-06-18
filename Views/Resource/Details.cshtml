@@ -1,0 +1,87 @@
+﻿@model LibSys.Models.Resource
+
+<div class="container">
+    <h1 class="my-4">Resource Details</h1>
+
+    <dl class="row">
+        <dt class="col-sm-3">ID:</dt>
+        <dd class="col-sm-9">@Model.Id</dd>
+
+        <dt class="col-sm-3">Title:</dt>
+        <dd class="col-sm-9">@Model.Title</dd>
+
+        <dt class="col-sm-3">Author:</dt>
+        <dd class="col-sm-9">@Model.Author</dd>
+
+        <dt class="col-sm-3">Publisher:</dt>
+        <dd class="col-sm-9">@Model.Publisher</dd>
+
+        <dt class="col-sm-3">Publication Date:</dt>
+        <dd class="col-sm-9">@Model.PublicationDate.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">ISBN:</dt>
+        <dd class="col-sm-9">@Model.ISBN</dd>
+
+        <dt class="col-sm-3">Description:</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+
+        <dt class="col-sm-3">Loan Period:</dt>
+        <dd class="col-sm-9">@Model.LoanPeriod days.</dd>
+
+        <dt class="col-sm-3">Borrowing Availability:</dt>
+        @if (Model.IsAvailableForBorrowing)
+        {
+            <dd class="col-sm-9">Available for borrowing.</dd>
+        }
+        else
+        {
+            <dd class="col-sm-9">Not available for borrowing.</dd>
+        }
+    </dl>
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Librarian"))
+    {
+        <h4>Borrowed By:</h4>
+        <div class="row">
+            @if (Model.Loans != null && Model.Loans.Any())
+            {
+                @foreach (var loan in Model.Loans)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">@loan.User.FirstName @loan.User.LastName</h5>
+                                <p class="card-text">Username: <a href="@Url.Action("Details", "User", new { id = loan.User.Id })">@loan.User.UserName</a></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="col">No loans found.</p>
+            }
+        </div>
+    }
+
+    @if (!User.IsInRole("Admin") && !User.IsInRole("Librarian") && Model.IsAvailableForBorrowing)
+    {
+        <form asp-controller="Loan" asp-action="Borrow" method="post" class="mt-4">
+            <input type="hidden" name="ResourceId" value="@Model.Id" />
+            <button type="submit" class="btn btn-primary">Borrow</button>
+        </form>
+    }
+
+    @if (User.IsInRole("Admin") || User.IsInRole("Librarian"))
+    {
+        <form asp-controller="Resource" asp-action="Delete" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this resource?');" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-controller="Resource" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Cancel</a>
+        </form>
+    }
+
+    <p class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </p>
+</div>

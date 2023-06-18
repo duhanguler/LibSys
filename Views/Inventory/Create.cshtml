@@ -1,0 +1,27 @@
+﻿@model LibSys.Models.Inventory
+
+<div class="container">
+    <h1 class="mt-4 mb-3">Create Inventory</h1>
+
+    <form asp-controller="Inventory" asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="ResourceId" class="form-label">Resource:</label>
+            <select asp-for="ResourceId" asp-items="@ViewBag.ResourceList" class="form-select"></select>
+            <span asp-validation-for="ResourceId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Quantity" class="form-label">Quantity:</label>
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+
+        <!-- Diğer özellikler -->
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+
+    <p class="mt-4">
+        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary" })
+    </p>
+</div>

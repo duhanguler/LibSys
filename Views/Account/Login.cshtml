@@ -1,0 +1,34 @@
+﻿@model LibSys.Models.ViewModels.LoginViewModel
+
+<h1 class="mb-4">Giriş Yap</h1>
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <div class="form-check">
+            <input class="form-check-input" asp-for="RememberMe" />
+            <label class="form-check-label" asp-for="RememberMe">Beni Hatırla</label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+</form>
+
+<div class="text-danger">@Html.ValidationSummary(true)</div>
+<hr />
+
+<p>
+    <a asp-controller="Account" asp-action="Register" class="btn btn-secondary btn-sm">Register</a> - New user? Register here.
+</p>
+
+<p>
+    <a asp-controller="Account" asp-action="ForgotPassword" class="btn btn-secondary btn-sm">Forgot Password</a> - Forgot your password? Reset it here.
+</p>
